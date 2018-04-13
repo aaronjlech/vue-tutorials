@@ -31,7 +31,7 @@
                 Loading...
             </div>
             <div class="search-results" v-else>
-                Found {{ items.length }} results for search term {{ lastSearch }}
+                Found {{ results.length }} results for search term {{ lastSearch }}
             </div>
             <div v-for="(item, idx) in items" v-bind:key="item.id" class="product">
                 <div>
@@ -42,6 +42,11 @@
                 <h4 class="product-title">{{ item.title }}</h4>
                 <p><strong>Price:</strong>{{ item.price | currency }}</p>
                 <button class="btn" v-on:click="addItemToCart(item)">Add to Cart</button>
+            </div>
+            <div id="product-list-bottom">
+                <span v-if="noMoreItems">
+                    No more Items
+                </span>
             </div>
         </div>
         <div class="cart">
@@ -71,6 +76,7 @@
 <script src="reload/reload.js"></script>
 <script type="text/javascript" src="node_modules/vue/dist/vue.js"></script>
 <script src="node_modules/vue-resource/dist/vue-resource.min.js"></script>
+<script src="node_modules/scrollmonitor/scrollMonitor.js"></script>
 <script type="text/javascript" src="public/script.js"></script>
 
 </body>
