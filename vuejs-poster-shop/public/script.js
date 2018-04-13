@@ -20,7 +20,9 @@ new Vue({
                     this.lastSearch = this.search;
                     this.search = "";
                     this.items = res.data.map(imgur => {
-                        imgur.price = Math.floor(Math.random() * 30) + 6;
+                        const dollar = Math.floor(Math.random() * 60) + 6;
+                        const cent = Math.round(Math.random() * 100) / 100
+                        imgur.price = dollar + cent;
                         return imgur;
                     })
                 })
@@ -41,7 +43,8 @@ new Vue({
         setCartTotal: function() {
             let newTotal = 0;
             this.cart.forEach(item => newTotal += (item.price * item.qty));
-            this.total = newTotal;
+
+            this.total = Math.round(newTotal * 100) / 100;
         },
         updateQty: function(item, qty) {
             if(qty == 0) {
@@ -54,7 +57,17 @@ new Vue({
     },
     filters: {
         currency: function(price) {
-            return `$${price}`;
+            let priceString = price.toString();
+            let cents = priceString.split('.')[1] || '';
+            console.log(priceString.length);
+            if(cents.length === 0) {
+                priceString += '00'
+                console.log(priceString);
+            } else if (cents.length === 1) {
+                priceString += '0'
+            }
+
+            return `$${priceString}`;
         }
     }
 })

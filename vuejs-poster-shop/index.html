@@ -48,13 +48,13 @@
             <h2>Shopping Cart</h2>
             <div>
                 <div>
-                    <ul>
-                        <li class="cart-item" v-for="item in cart">
+                    <transition-group name='fade' tag="ul">
+                        <li class="cart-item" v-for="item in cart" v-bind:key="item.id">
                             <div class="item-title">{{ item.title }}</div>
                             {{ item.price | currency }}
                             <input type="number"/>
                         </li>
-                    </ul>
+                    </transition-group>
                     <div v-if="cart.length">
                         Total: {{ total | currency}}
                     </div>
