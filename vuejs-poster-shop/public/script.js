@@ -3,9 +3,19 @@ new Vue({
     data: {
         total: 0,
         items: [],
-        cart: []
+        cart: [],
+        search: '',
     },
     methods: {
+        onSubmit: function() {
+            this.$http.get(`/search/${this.search}`)
+                .then(function(res) {
+                    this.items = res.data.map(imgur => {
+                        imgur.price = Math.floor(Math.random() * 30) + 6;
+                        return imgur;
+                    })
+                })
+        },
         addItem: function(itemToAdd) {
             let itemInCart = this.cart.find(item => item.id === itemToAdd.id);
             if (itemInCart) {
