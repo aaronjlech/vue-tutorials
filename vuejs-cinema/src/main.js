@@ -6,7 +6,7 @@ import moment from 'moment-timezone';
 import './style.scss';
 
 import routes from './routes';
-import { checkFilter } from './util/bus';
+import { checkFilter, setDay } from './util/bus';
 
 
 Vue.use(VueResource);
@@ -29,6 +29,7 @@ new Vue({
         }).catch(err => console.log(err));
         //subscribe global Vue eventListener
         this.$bus.$on('check-filter', checkFilter.bind(this));
+        this.$bus.$on('set-day', setDay.bind(this));
     },
     router,
 })
