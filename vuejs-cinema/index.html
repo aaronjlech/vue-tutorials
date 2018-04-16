@@ -18,12 +18,7 @@
         <img src="/public/logo.png">
         <h1>Vue.js Cinema</h1>
     </div>
-    <div id="overview">
-        <div class="main">
-            <movie-list v-bind:genre="genre" :movies="movies" :day="day" :time="time"></movie-list>
-            <movie-filter v-on:check-filter="checkFilter" v-bind:time="time" :genre="genre"></movie-filter>
-        </div>
-    </div>
+    <router-view v-bind:genre="genre" :movies="movies" :day="day" :time="time"></router-view>
 </div>
 <script src="/dist/build.js"></script>
 </body>

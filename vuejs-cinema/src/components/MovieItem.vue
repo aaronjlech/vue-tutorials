@@ -1,20 +1,18 @@
 <template>
     <div class="movie">
         <div class="movie-col-left">
-            <img v-bind:src="movie.Poster" :alt="movie.Title">
+            <router-link v-bind:to="{ name: 'movie', params: { id: movie.imdbID}}">
+                <img v-bind:src="movie.Poster" :alt="movie.Title">
+            </router-link>
         </div>
         <div class="movie-col-right">
             <div class="movie-title">
-                <h2>{{ movie.Title}}</h2>
+                <router-link v-bind:to="{ name: 'movie', params: { id: movie.imdbID }}">
+                    <h2>{{ movie.Title}}</h2>
+                </router-link>
                 <span class="movie-rating">{{ movie.Rated }}</span>
             </div>
-            <div class="movie-sessions">
-                <div v-for="session in filteredMovieTimes(sessions)" class="session-time-wrapper">
-                    <div class="session-time">
-                        {{ formatMovieTime(session.time) }}
-                    </div>
-                </div>
-            </div>
+            <slot></slot>
         </div>
     </div>
 </template>
@@ -25,25 +23,9 @@ import moment from 'moment-timezone';
 import times from '../util/times';
 
     export default {
-        props: ['movie', 'sessions', 'day', 'time'],
+        props: ['movie'],
         methods: {
-            formatMovieTime(time) {
-                return moment(time).format('h:mm A');
-            },
-            filteredMovieTimes(sessions) {
-                return sessions.filter(this.sessionPassesTimeFilter);
-            },
-            sessionPassesTimeFilter(session) {
-                if (!this.day.isSame(moment(session.time), 'day')) {
-                    return false;
-                } else if (this.time.length === 0 || this.time.length === 2) {
-                    return true
-                } else if (this.time[0] === times.AFTER_6PM) {
-                    return moment(session.time).hour() >= 18;
-                } else {
-                    return moment(session.time).hour() < 18;
-                }
-            }
+
         }
     }
 </script>
