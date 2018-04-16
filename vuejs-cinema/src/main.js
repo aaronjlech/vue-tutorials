@@ -7,7 +7,7 @@ import './style.scss';
 
 import routes from './routes';
 import { checkFilter, setDay } from './util/bus';
-
+import { hasClass, removeClass, addClass } from './util/helpers';
 
 Vue.use(VueResource);
 Vue.use(VueRouter);
@@ -32,4 +32,24 @@ new Vue({
         this.$bus.$on('set-day', setDay.bind(this));
     },
     router,
+})
+
+Vue.directive('tooltip', {
+    bind(el, bindings) {
+        let span = document.createElement('SPAN');
+        addClass(span, 'tooltip');
+        let text = document.createTextNode('Seats available: 200');
+        span.appendChild(text);
+        el.appendChild(span);
+        let div = el.getElementsByTagName('DIV')[0];
+        div.addEventListener('mouseover', function() {
+            let span = event.target.parentNode.getElementsByTagName('SPAN')[0]
+            addClass(span, 'tooltip-show')
+        })
+        div.addEventListener('mouseout', function() {
+            let span = event.target.parentNode.getElementsByTagName('SPAN')[0]
+            removeClass(span, 'tooltip-show')
+
+        })
+    }
 })
