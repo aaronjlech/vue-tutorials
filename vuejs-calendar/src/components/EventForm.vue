@@ -10,6 +10,7 @@ export default {
     computed: {
         active() {
                 return this.$store.state.showEventForm;
+
         },
         top() {
             return `${this.$store.state.eventFormY}px`
