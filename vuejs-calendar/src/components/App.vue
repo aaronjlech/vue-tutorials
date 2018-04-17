@@ -1,23 +1,66 @@
 <template >
-  <div class="">
-      <div class="" v-for="week in weeks">
-          week
-          <div class="" v-for="day in week">
-              {{ day }}
-          </div>
-      </div>
-  </div>
+    <div class="">
+        <div id="header">
+            <div>
+                <h1>Vue.js Calendar</h1>
+            </div>
+            <div>
+                <current-month></current-month>
+            </div>
+        </div>
+        <div id="day-bar">
+            <div class="">
+                Mon
+            </div>
+            <div class="">
+                Tue
+            </div>
+            <div class="">
+                Wed
+            </div>
+            <div class="">
+                Thu
+            </div>
+            <div class="">
+                Fri
+            </div>
+            <div class="">
+                Sat
+            </div>
+            <div class="">
+                Sun
+            </div>
+        </div>
+        <div id="calendar">
+
+            <div class="" v-for="week in weeks" class="calendar-week">
+                <calendar-day v-for="day in week" :day="day">
+
+                </calendar-day>
+            </div>
+        </div>
+        <event-form></event-form>
+    </div>
 </template>
 
 <script>
+import CalendarDay from './CalendarDay.vue';
+import CurrentMonth from './CurrentMonth.vue';
+import EventForm from './EventForm.vue';
+
 export default {
-    data: function() {
-        return {
-            month: 4,
-            year: 2018
-        };
+    components: {
+        CalendarDay,
+        CurrentMonth,
+        EventForm
     },
     computed: {
+        month() {
+            return this.$store.state.currentMonth
+        },
+        year() {
+            return this.$store.state.currentYear
+        },
         days() {
             let days = [];
             const dateFormat = "YYYY-M-D";
@@ -25,12 +68,13 @@ export default {
                 `${this.year}-${this.month}-1`,
                 dateFormat
             );
+            console.log(currentDay);
             do {
                 days.push(currentDay);
                 currentDay = this.$moment(currentDay).add(1, "days");
-            } while ((currentDay.month() + 1) === this.month);
-            const MONDAY = 0;
-            const SUNDAY = 1;
+            } while (currentDay.month() + 1 === this.month);
+            const MONDAY = 1;
+            const SUNDAY = 0;
             currentDay = this.$moment(days[0]);
 
             if (currentDay !== MONDAY) {
