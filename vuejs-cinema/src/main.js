@@ -51,5 +51,8 @@ Vue.directive('tooltip', {
             removeClass(span, 'tooltip-show')
 
         })
+    },
+    unbind(el) {
+
     }
 })
